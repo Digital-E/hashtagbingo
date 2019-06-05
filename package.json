@@ -1,9 +1,9 @@
 {
-  "name": "gatsby-starter-default",
+  "name": "HashtagBingo",
   "private": true,
-  "description": "A simple starter to get up and developing quickly with Gatsby",
+  "description": "Hashtag Bingo",
   "version": "0.1.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "author": "http://samuelbassett.xyz",
   "dependencies": {
     "gatsby": "^2.5.7",
     "gatsby-image": "^2.1.0",
@@ -12,11 +12,18 @@
     "gatsby-plugin-react-helmet": "^3.0.12",
     "gatsby-plugin-sharp": "^2.0.37",
     "gatsby-source-filesystem": "^2.0.37",
+    "gatsby-source-prismic": "^2.3.0-alpha.3",
     "gatsby-transformer-sharp": "^2.1.19",
+    "gh-pages": "^2.0.1",
+    "gsap": "^2.1.3",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-helmet": "^5.2.1"
+    "react-helmet": "^5.2.1",
+    "react-pose": "^4.0.8",
+    "react-slick": "^0.24.0",
+    "slick-carousel": "^1.8.1",
+    "styled-components": "^4.2.0"
   },
   "devDependencies": {
     "prettier": "^1.17.1"
@@ -26,6 +33,7 @@
   ],
   "license": "MIT",
   "scripts": {
+    "deploy": "gatsby build --prefix-paths && gh-pages -d public",
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write src/**/*.{js,jsx}",
