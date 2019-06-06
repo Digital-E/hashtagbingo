@@ -4,6 +4,16 @@ html {
 
 }
 
+@font-face {
+  src: url('../fonts/vroum_lift.otf');
+  font-family: 'Vroum-Lift';
+}
+
+@font-face {
+  src: url('../fonts/Calibre-Regular.otf');
+  font-family: 'Calibre-Regular';
+}
+
 body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
@@ -13,9 +23,24 @@ body {
   font-family: helvetica;
 }
 
+.selected {
+  color:rgba(249, 160, 49, 1)
+}
+
+.visible {
+  visibility: visible;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
 .slick-slider {
-  top: 50%;
-  transform: translateY(-50%)
+
+}
+
+.slick-list {
+  overflow: visible !important;
 }
 
 .slick-arrow {

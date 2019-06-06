@@ -46,7 +46,7 @@ const SquareDiv = posed.div({
     scale: 1,
     rotate: 0,
     zIndex: 999,
-    backgroundColor: 'rgba(0, 255, 255, 1)',
+    backgroundColor: 'rgba(249, 160, 49, 1)',
     transition: {
       scale: {
         type: 'keyframes',
@@ -87,14 +87,14 @@ const StyledSquareDiv = styled(SquareDiv)`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: black;
+  color: blue;
   background-color: rgba(255,255,255,1);
-  padding: 10%;
   
   span {
     // transform: rotateZ(45deg);
     // transform-origin: center center;
     text-align: center
+    padding: 10%;
   }
 `
 

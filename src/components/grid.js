@@ -15,7 +15,7 @@ import SEO from "../components/seo"
 
 
 const Container = styled.div`
-    width: 98vw;
+    width: 98vw !important;
     height: 98vw;
     max-width: 500px;
     max-height: 500px;
@@ -23,7 +23,7 @@ const Container = styled.div`
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(4, 1fr);
     grid-gap: 1px;
-
+    margin: 0 auto;
 `
 // const Square = styled.div`
 //   height: auto;
@@ -36,24 +36,42 @@ const Container = styled.div`
 // `
 
 const GenerateButton = styled.div`
+    font-family: 'Calibre-Regular';
+    color: blue;
+    border: 1px solid white;
+    border-radius: 50px;
+    background-color: white;
+    width: 50%;
+    margin: 0 auto;
+    padding: 10px 10px;
+    line-height: 30px;
+
+    text-align: center;
+
+    span {
+        position: relative;
+        top: 4px;
+        font-size: 2em;
+    }
 `
 
 const CleanLocalStorageButton = styled.div`
     position: absolute;
     bottom: 0;
+    color: white;
+    text-decoration: underline
 `
 
 const ContainerOuter = styled.div`
-    display: flex !important;
-    width: 100%;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
+    // display: flex !important;
+    // width: 100%;
+    // height: 100%;
+    // justify-content: center;
+    // align-items: center;
 `
 
 const SliderContainer = styled.div`
-    position: absolute;
-    height: 100%;
+    // height: 100%;
     width: 100%
 `
 
@@ -66,11 +84,15 @@ class Grid extends React.Component {
 
         this.state = {
             grids: null,
+            originalGrids: null,
+            currentSlide: null,
+            roundNumber: null,
         }
 
         this.updateInput = this.updateInput.bind(this);
         this.generateGrid = this.generateGrid.bind(this);
         this.cleanLocalStorage = this.cleanLocalStorage.bind(this);
+        this._changedSlide = this._changedSlide.bind(this)
 
     }
 
@@ -82,6 +104,16 @@ class Grid extends React.Component {
     componentDidMount() {
 
         this.hydrateStateWithLocalStorage();
+
+        setTimeout(()=>{
+
+            if(this.state.grids != null) {
+                this.props.isVisible(true)
+                this._changedSlide(0,0)
+            }
+
+        },200)
+
     }
 
     //Hydrate State With Local Storage
@@ -109,13 +141,16 @@ class Grid extends React.Component {
 
     //Update State With Shuffled Grids
 
-    updateInput(shuffledGrids) {
+    updateInput(shuffledGrids, originalGrids) {
+
 
         this.setState({
             grids: shuffledGrids
         });
 
         localStorage.setItem('grids', JSON.stringify(shuffledGrids));
+        localStorage.setItem('originalGrids', JSON.stringify(originalGrids));
+
 
     }
     
@@ -172,6 +207,14 @@ class Grid extends React.Component {
 
         });      
 
+        this.setState({
+            originalGrids: allGrids,
+            currentSlide: allGrids[0].roundName,
+            roundNumber: 0
+        });
+
+        this.props.currentRound(allGrids[0].roundName, 0);
+
         
 
         const shuffle = (array) => {
@@ -199,12 +242,19 @@ class Grid extends React.Component {
             return shuffle(grid.tags);
         });
 
+        let originalGrids = allGrids;
 
-        this.updateInput(shuffledGrids);
+        this.updateInput(shuffledGrids, originalGrids);
+
+        this.props.isVisible(true);
+
+    
 
     }
 
     cleanLocalStorage() {
+
+        this.props.isVisible(false);
 
         // for all items in state
         for (let key in this.state) {
@@ -243,6 +293,22 @@ class Grid extends React.Component {
      
     }
 
+    _changedSlide(oldIndex, newIndex){
+
+        let originalGrids = this.state.originalGrids;
+
+        this.setState({
+            currentSlide: originalGrids[newIndex].roundName,
+            roundNumber: newIndex
+        });
+
+        localStorage.setItem('currentSlide', JSON.stringify(originalGrids[newIndex].roundName));
+        localStorage.setItem('roundNumber', JSON.stringify(newIndex));
+
+        this.props.currentRound(originalGrids[newIndex].roundName, newIndex);
+
+    }
+
     render() {
 
 
@@ -251,22 +317,24 @@ class Grid extends React.Component {
             // infinite: true,
             speed: 500,
             slidesToShow: 1,
-            slidesToScroll: 1,
+            slidesToScroll: 1
           };
 
         return this.state.grids ? 
         
-        <SliderContainer>
-        <Slider {...settings}>
+
+        <SliderContainer className={this.props.className}> 
+        <Slider {...settings} beforeChange={this._changedSlide}>
 
             {
                 this.state.grids.map((item, index) => {
 
+                    console.log(item);
+
                     let gridIndex = index;
 
                    return (
-                       
-                   <ContainerOuter key={index}>
+                    
                     
                     <Container>
                         {
@@ -277,7 +345,7 @@ class Grid extends React.Component {
                             ))
                         }
                     </Container>
-                    </ContainerOuter>
+              
 
                     )   
                 })
@@ -285,14 +353,15 @@ class Grid extends React.Component {
 
         </Slider>
         <CleanLocalStorageButton onClick={this.cleanLocalStorage}>
-            Clean Local Storage
+            Reset
         </CleanLocalStorageButton>
         </SliderContainer>
+
 
             :
 
         <GenerateButton onClick={this.generateGrid}>
-            Generate Grid
+            <span>Let's Play Bingo!</span>
         </GenerateButton>
 
             }
@@ -303,12 +372,15 @@ export default props => (
     <StaticQuery
         query={graphql`
             query Data {
-                allPrismicBingogrids {
+                allPrismicBingogrids(sort: { order: ASC, fields: [data___order___text] }) {
                     edges {
                     node {
                     id
                     uid
                     data {
+                    order {
+                        text
+                    }
                     round_name {
                         text
                     }

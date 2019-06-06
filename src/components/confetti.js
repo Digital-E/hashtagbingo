@@ -89,7 +89,7 @@ class ConfettiCannon extends React.Component {
             this.setCanvasSize();
 
             // fire off for a demo
-            this.timer = setTimeout(this.handleMouseup, 1000);
+            // this.timer = setTimeout(this.handleMouseup, 1000);
 
     }
 
@@ -312,7 +312,7 @@ class ConfettiCannon extends React.Component {
     render() {
         
         if (this.canvas != null) {
-            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            // this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         
             // only draw the vector when the drawVector flag is on
             this.drawVector && this.drawVectorLine();
@@ -323,9 +323,7 @@ class ConfettiCannon extends React.Component {
         }
 
         return (
-            <canvas id="canvas" ref={el => this.canvas = el}>
-                {this.props.children}
-            </canvas>
+            <canvas id="canvas" ref={el => this.canvas = el}></canvas>
         )
     }
 }
