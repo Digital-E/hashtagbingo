@@ -12,7 +12,7 @@ import Grid from "../components/grid"
 import Logo from "../components/logo"
 
 const Container = styled.div`
-    position: absolute;
+    position: fixed;
     display: flex;
     flex-direction: column;
     justify-content: center;
