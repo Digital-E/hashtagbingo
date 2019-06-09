@@ -12,10 +12,10 @@ import Grid from "../components/grid"
 import Logo from "../components/logo"
 
 const Container = styled.div`
-    position: fixed;
+    position: absolute;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     top: 0;
     left: 0;
     height: 100%;
@@ -24,7 +24,9 @@ const Container = styled.div`
 `
 
 const Footer = styled.div`
+    position: absolute;
     display: flex;
+    height: 150px;
     width: 100%;
     flex-direction: row;
     justify-content: space-between;
@@ -45,16 +47,17 @@ const Header = styled.div`
 
 const Title = styled.div`
     font-family: 'Vroum-Lift';
-    font-size: 13em;
+    font-size: 6em;
     color: white;
     margin: 0;
     padding: 0;
     margin-left: 20px;
+    align-self: center;
 `
 
 const RoundName = styled.div`
     font-family: 'Vroum-Lift';
-    font-size: 7em;
+    font-size: 4em;
     color: white;
     margin: 0;
     padding: 20px 0 0 20px;
@@ -130,8 +133,6 @@ class IndexPage extends React.Component {
     render(){
         return(
             <>
-            <Container>
-            <SEO title="Home" />
             <Header className={this.state.isVisible ? 'visible' : 'invisible'}>
                 <RoundName>
                     {this.state.currentRound}
@@ -145,15 +146,17 @@ class IndexPage extends React.Component {
                     }
                     </RoundInner>
                 </Round>
-            </Header>
+            </Header>            
+            <Container>
+            <SEO title="Home" />
             <Grid className={this.state.isVisible ? 'visible' : 'invisible'} currentRound={this._currentRound} isVisible={this._onClick} />
+            </Container>
             <Footer>
                 <Title className={this.state.isVisible ? 'visible' : 'invisible'}>
                     #BINGO
                 </Title>
                 <Logo onClick={this._onClick}/>
-            </Footer>
-            </Container>
+            </Footer>            
             <ConfettiCanon/>
             </>
         )

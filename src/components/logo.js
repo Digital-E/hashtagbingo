@@ -6,12 +6,14 @@ import img from '../images/karlanders_logo_blue.svg'
 const Styled = styled.div`
   z-index: 998;
   margin-right: 20px;
+  align-self: center;
+  font-size: 8em;
 
   @media(min-width: 992px) {
   }
 
   img {
-    height: 100%;
+    height: 80px;
     width: 100%
   }
 `

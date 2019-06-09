@@ -89,10 +89,15 @@ class Grid extends React.Component {
             roundNumber: null,
         }
 
+        this.intervalTimer = 0;
+        this.touchDownTime = 0;
+
         this.updateInput = this.updateInput.bind(this);
         this.generateGrid = this.generateGrid.bind(this);
         this.cleanLocalStorage = this.cleanLocalStorage.bind(this);
-        this._changedSlide = this._changedSlide.bind(this)
+        this._changedSlide = this._changedSlide.bind(this);
+        this._onTouchStart = this._onTouchStart.bind(this);
+        this._onTouchEnd = this._onTouchEnd.bind(this);
 
     }
 
@@ -156,31 +161,6 @@ class Grid extends React.Component {
     
 
     generateGrid() {
-
-
-        // let grids = [
-        //     [
-        //         {tag: '#hello', isSelected: false},{tag: '#how', isSelected: false},{tag: '#are', isSelected: false},{tag: '#you', isSelected: false},{tag: '#red', isSelected: false},
-        //         {tag: '#dragon', isSelected: false},{tag: '#do', isSelected: false},{tag: '#you', isSelected: false},{tag: '#have', isSelected: false},{tag: '#any', isSelected: false},
-        //         {tag: '#advie', isSelected: false},{tag: '#for', isSelected: false},{tag: '#a', isSelected: false},{tag: '#young', isSelected: false},{tag: '#warrior', isSelected: false},
-        //         {tag: '#like', isSelected: false},{tag: '#me', isSelected: false},{tag: '#?', isSelected: false},{tag: '#I', isSelected: false},{tag: '#have', isSelected: false},
-        //         {tag: '#a', isSelected: false},{tag: '#keen', isSelected: false},{tag: '#interest', isSelected: false},{tag: '#in', isSelected: false},{tag: '#helping', isSelected: false}
-        //     ],
-        //     [
-        //         {tag: '#hello', isSelected: false},{tag: '#how', isSelected: false},{tag: '#are', isSelected: false},{tag: '#you', isSelected: false},{tag: '#red', isSelected: false},
-        //         {tag: '#dragon', isSelected: false},{tag: '#do', isSelected: false},{tag: '#you', isSelected: false},{tag: '#have', isSelected: false},{tag: '#any', isSelected: false},
-        //         {tag: '#advie', isSelected: false},{tag: '#for', isSelected: false},{tag: '#a', isSelected: false},{tag: '#young', isSelected: false},{tag: '#warrior', isSelected: false},
-        //         {tag: '#like', isSelected: false},{tag: '#me', isSelected: false},{tag: '#?', isSelected: false},{tag: '#I', isSelected: false},{tag: '#have', isSelected: false},
-        //         {tag: '#a', isSelected: false},{tag: '#keen', isSelected: false},{tag: '#interest', isSelected: false},{tag: '#in', isSelected: false},{tag: '#helping', isSelected: false}
-        //     ],
-        //     [
-        //         {tag: '#hello', isSelected: false},{tag: '#how', isSelected: false},{tag: '#are', isSelected: false},{tag: '#you', isSelected: false},{tag: '#red', isSelected: false},
-        //         {tag: '#dragon', isSelected: false},{tag: '#do', isSelected: false},{tag: '#you', isSelected: false},{tag: '#have', isSelected: false},{tag: '#any', isSelected: false},
-        //         {tag: '#advie', isSelected: false},{tag: '#for', isSelected: false},{tag: '#a', isSelected: false},{tag: '#young', isSelected: false},{tag: '#warrior', isSelected: false},
-        //         {tag: '#like', isSelected: false},{tag: '#me', isSelected: false},{tag: '#?', isSelected: false},{tag: '#I', isSelected: false},{tag: '#have', isSelected: false},
-        //         {tag: '#a', isSelected: false},{tag: '#keen', isSelected: false},{tag: '#interest', isSelected: false},{tag: '#in', isSelected: false},{tag: '#helping', isSelected: false}
-        //     ]
-        // ]
 
         let allGrids = [];
 
@@ -309,6 +289,39 @@ class Grid extends React.Component {
 
     }
 
+    _onTouchStart(){
+        
+        let touchStart = new Date();
+
+        this.intervalTimer = setInterval( () => {
+
+            this.touchDownTime = new Date();
+
+            console.log(this.touchDownTime);
+
+            if(this.touchDownTime - touchStart > 5000) {
+
+                this.cleanLocalStorage();
+
+                this.touchDownTime = 0;
+
+                clearInterval(this.intervalTimer);
+            }
+
+        },100);
+
+    }
+
+    _onTouchEnd(){
+
+        this.touchDownTime = 0;
+
+        clearInterval(this.intervalTimer);
+
+        console.log(this.touchDownTime)
+
+    }
+
     render() {
 
 
@@ -323,13 +336,11 @@ class Grid extends React.Component {
         return this.state.grids ? 
         
 
-        <SliderContainer className={this.props.className}> 
+        <SliderContainer onTouchStart={this._onTouchStart} onTouchEnd={this._onTouchEnd} className={this.props.className}> 
         <Slider {...settings} beforeChange={this._changedSlide}>
 
             {
                 this.state.grids.map((item, index) => {
-
-                    console.log(item);
 
                     let gridIndex = index;
 
@@ -352,9 +363,9 @@ class Grid extends React.Component {
             }
 
         </Slider>
-        <CleanLocalStorageButton onClick={this.cleanLocalStorage}>
+        {/* <CleanLocalStorageButton onClick={this.cleanLocalStorage}>
             Reset
-        </CleanLocalStorageButton>
+        </CleanLocalStorageButton> */}
         </SliderContainer>
 
 

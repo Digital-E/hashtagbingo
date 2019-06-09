@@ -323,7 +323,7 @@ class ConfettiCannon extends React.Component {
         }
 
         return (
-            <canvas id="canvas" ref={el => this.canvas = el}></canvas>
+            <canvas style={{top: 0, position: 'absolute', zIndex: '-1'}} id="canvas" ref={el => this.canvas = el}></canvas>
         )
     }
 }
