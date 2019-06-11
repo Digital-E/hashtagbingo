@@ -89,12 +89,13 @@ const StyledSquareDiv = styled(SquareDiv)`
   align-items: center;
   color: blue;
   background-color: rgba(255,255,255,1);
+  border-radius: 3px;
   
   span {
     // transform: rotateZ(45deg);
     // transform-origin: center center;
     text-align: center
-    padding: 10%;
+    margin: 10%;
   }
 `
 

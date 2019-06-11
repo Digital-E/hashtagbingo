@@ -11,80 +11,106 @@ import Grid from "../components/grid"
 
 import Logo from "../components/logo"
 
+import { Textfit } from 'react-textfit';
+
 const Container = styled.div`
-    position: fixed;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     top: 0;
     left: 0;
-    height: 100%;
     width: 100%;
 
 `
 
 const Footer = styled.div`
-    position: absolute;
-    display: flex;
-    height: 150px;
-    width: 100%;
-    flex-direction: row;
-    justify-content: space-between;
+    display: grid;
+    width: 100vw;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 1fr;
     bottom: 0;
     margin: 0;
     padding: 0;
+
 `
 
 const Header = styled.div`
-    display: flex;
-    width: 100%;
-    flex-direction: row;
-    justify-content: space-between;
+    display: grid;
+    width: 100vw;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 1fr;
     top: 0;
     margin: 0;
     padding: 0;
+
 `
 
 const Title = styled.div`
+    position: relative;
+    top: 10px;
+    font-size: 3em;
     font-family: 'Vroum-Lift';
-    font-size: 6em;
     color: white;
     margin: 0;
     padding: 0;
     margin-left: 20px;
     align-self: center;
+
+    @media(min-width: 375px) {
+        font-size: 4em;
+    }
+
+    @media(min-height: 635px) {
+        font-size: 8em;
+    }
 `
 
 const RoundName = styled.div`
-    font-family: 'Vroum-Lift';
-    font-size: 4em;
-    color: white;
-    margin: 0;
-    padding: 20px 0 0 20px;
-`
-const Round = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    position: relative;
     font-family: 'Vroum-Lift';
     font-size: 3em;
     color: white;
     margin: 0;
+    padding: 20px 0 0 20px;
+
+    @media(min-width: 375px) {
+        font-size: 4em;
+    }
+
+    @media(min-height: 635px) {
+        font-size: 8em;
+    }
+
+`
+const Round = styled.div`
+    position: relative;
+    justify-self: flex-end;
+    font-size: 2em;
+    align-items: top;
+    font-family: 'Vroum-Lift';
+    color: white;
+    margin: 0;
     padding: 20px 20px 0 0;
+
+    @media(min-width: 375px) {
+        font-size: 3em;
+    }
 `
 
 const RoundInner = styled.div`
 `
 
+const MainContainer = styled.div`
+    display: grid;
+    grid-template-columns: 100vw;
+    grid-template-rows: 1fr 1fr 1fr;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    overflow: hidden;
+`
 
-const Colors = [
-    '#FE0000',
-    '#1300fe',
-    '#fe00fb',
-    '#f5fd33',
-    'rgb(117, 250, 76)',
-    'rgb(239, 164, 76)'
-]
 
 
 
@@ -133,30 +159,30 @@ class IndexPage extends React.Component {
     render(){
         return(
             <>
+            <SEO title="Home" />
+            <MainContainer>
             <Header className={this.state.isVisible ? 'visible' : 'invisible'}>
                 <RoundName>
                     {this.state.currentRound}
                 </RoundName>
                 <Round>
-                    <RoundInner>
                     {
                         this.state.roundNumber.map((item, index) => (
                             <span className={this.state.roundNumber[index].selected ? 'selected' : 'not-selected'}>#</span>
                         ))
                     }
-                    </RoundInner>
                 </Round>
-            </Header>            
-            <Container>
-            <SEO title="Home" />
+            </Header>   
+            <Container>        
             <Grid className={this.state.isVisible ? 'visible' : 'invisible'} currentRound={this._currentRound} isVisible={this._onClick} />
-            </Container>
+            </Container> 
             <Footer>
                 <Title className={this.state.isVisible ? 'visible' : 'invisible'}>
                     #BINGO
                 </Title>
                 <Logo onClick={this._onClick}/>
-            </Footer>            
+            </Footer>
+            </MainContainer>            
             <ConfettiCanon/>
             </>
         )

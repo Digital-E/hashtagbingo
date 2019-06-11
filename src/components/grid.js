@@ -22,7 +22,7 @@ const Container = styled.div`
     display: grid !important;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(4, 1fr);
-    grid-gap: 1px;
+    grid-gap: 3px;
     margin: 0 auto;
 `
 // const Square = styled.div`
@@ -118,6 +118,8 @@ class Grid extends React.Component {
             }
 
         },200)
+
+        // this.generateGrid();
 
     }
 
@@ -297,8 +299,6 @@ class Grid extends React.Component {
 
             this.touchDownTime = new Date();
 
-            console.log(this.touchDownTime);
-
             if(this.touchDownTime - touchStart > 5000) {
 
                 this.cleanLocalStorage();
@@ -318,7 +318,6 @@ class Grid extends React.Component {
 
         clearInterval(this.intervalTimer);
 
-        console.log(this.touchDownTime)
 
     }
 

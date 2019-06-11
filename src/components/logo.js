@@ -7,21 +7,19 @@ const Styled = styled.div`
   z-index: 998;
   margin-right: 20px;
   align-self: center;
-  font-size: 8em;
-
-  @media(min-width: 992px) {
-  }
+  justify-self: flex-end;
 
   img {
-    height: 80px;
-    width: auto
+    height: 60px;
+    width: auto;
   }
+
 `
 
 
 const Logo = (props) => (
     <Styled>
-    <div onClick={props.onClick}>
+    <div className="logo" onClick={props.onClick}>
         <img alt="" src={img}/>
     </div>
     </Styled>

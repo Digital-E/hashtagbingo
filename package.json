@@ -22,6 +22,7 @@
     "react-helmet": "^5.2.1",
     "react-pose": "^4.0.8",
     "react-slick": "^0.24.0",
+    "react-textfit": "^1.1.0",
     "slick-carousel": "^1.8.1",
     "styled-components": "^4.2.0"
   },

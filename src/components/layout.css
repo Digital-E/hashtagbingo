@@ -55,3 +55,12 @@ body {
   width: 100%;
   height: 100%;
 }
+
+@media(min-height: 635px) {
+
+  .logo img {
+    height: 90px !important;
+    width: auto;
+  }
+
+}
