@@ -103,7 +103,7 @@ const StyledSquareDiv = styled(SquareDiv)`
 
 export const Square = (props) => (
 
-    <StyledSquareDiv pose={props.isSelected ? 'selected' : 'notselected'} onClick={() => {props._onClickSquare(props.gridIndex)}}>
+    <StyledSquareDiv pose={props.isSelected ? 'selected' : 'notselected'} onTouchStart={() => {props._onClickSquare(props.gridIndex)}}>
       {props.children}
     </StyledSquareDiv>  
 

@@ -370,7 +370,7 @@ class Grid extends React.Component {
 
             :
 
-        <GenerateButton onClick={this.generateGrid}>
+        <GenerateButton onTouchStart={this.generateGrid}>
             <span>Let's Play Bingo!</span>
         </GenerateButton>
 
