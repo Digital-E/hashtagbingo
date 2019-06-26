@@ -99,13 +99,35 @@ const StyledSquareDiv = styled(SquareDiv)`
   }
 `
 
+const PreSquare = (props) => {
+
+  let touchHasMoved;
+
+  const _handleOnTouchStart = () => {
+    touchHasMoved = false;
+  }
+
+  const _handleOnTouchMove = () => {
+    touchHasMoved = true;
+  }
+
+  const _handleOnTouchEnd = (e) => {
+    if(touchHasMoved) return;
+    props._onClickSquare(e);
+  }
+
+
+  return(
+    <StyledSquareDiv pose={props.isSelected ? 'selected' : 'notselected'} onTouchStart={() => _handleOnTouchStart(props.gridIndex)} onTouchMove={() => _handleOnTouchMove()} onTouchEnd={() => _handleOnTouchEnd()}>
+      {props.children}
+    </StyledSquareDiv>  
+  )
+}
 
 
 export const Square = (props) => (
 
-    <StyledSquareDiv pose={props.isSelected ? 'selected' : 'notselected'} onTouchStart={() => {props._onClickSquare(props.gridIndex)}}>
-      {props.children}
-    </StyledSquareDiv>  
+    <PreSquare {...props}/>
 
 );
 
